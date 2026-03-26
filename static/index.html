@@ -3,391 +3,885 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>川时的音乐工坊</title>
-    <script src="https://cdn.jsdelivr.net/npm/wavesurfer.js@6/dist/wavesurfer.min.js"></script>
+    <title>川时的音乐工坊 | 专业AI混音</title>
+    <script src="https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --accent: #22d3ee;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --bg-dark: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --bg-elevated: #242424;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border: #2a2a2a;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            --gradient-2: linear-gradient(135deg, #22d3ee 0%, #6366f1 100%);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", "思源黑体", sans-serif;
         }
+
         body {
-            background: #121212;
-            color: #e0e0e0;
-            height: 100vh;
-            overflow: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        .app-container {
-            display: flex;
-            height: 100vh;
+
+        /* 动态背景 */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(34, 211, 238, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
         }
-        /* 左侧侧边栏 */
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 侧边栏 */
         .sidebar {
-            width: 240px;
-            background: #1e1e1e;
-            border-right: 1px solid #333;
+            width: 280px;
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
         }
+
         .sidebar-header {
-            padding: 20px 15px;
-            border-bottom: 1px solid #333;
+            padding: 32px 24px;
+            border-bottom: 1px solid var(--border);
         }
-        .project-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #61afef;
-            text-align: center;
-        }
-        .menu-list {
-            flex: 1;
-            padding: 20px 0;
-        }
-        .menu-item {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: 0.2s;
+
+        .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            border-left: 3px solid transparent;
+            gap: 12px;
         }
-        .menu-item:hover {
-            background: #2a2a2a;
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: var(--shadow-glow);
         }
-        .menu-item.active {
-            background: #252526;
-            border-left: 3px solid #61afef;
-            color: #61afef;
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        /* 右侧主窗口 */
-        .main-window {
+
+        .logo-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .nav-menu {
             flex: 1;
-            background: #121212;
-            overflow-y: auto;
-            padding: 30px;
+            padding: 24px 16px;
         }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 12px;
+            margin-bottom: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+            color: var(--primary-light);
+            box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-item-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* 面板 */
         .panel {
             display: none;
+            animation: fadeIn 0.3s ease;
         }
+
         .panel.active {
             display: block;
         }
-        .panel-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 25px;
-            color: #e0e0e0;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        /* 卡片 */
         .card {
-            background: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 25px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
+
         .card-title {
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 15px;
-            color: #dcdcdc;
+            color: var(--text-primary);
         }
-        .file-upload {
-            border: 2px dashed #333;
-            border-radius: 8px;
-            padding: 30px;
+
+        .card-badge {
+            padding: 4px 12px;
+            background: rgba(99, 102, 241, 0.15);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        /* 上传区域 */
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .upload-box {
+            position: relative;
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 32px 24px;
             text-align: center;
             cursor: pointer;
-            transition: 0.2s;
-            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            background: rgba(26, 26, 26, 0.5);
         }
-        .file-upload:hover {
-            border-color: #61afef;
+
+        .upload-box:hover, .upload-box.dragover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+            box-shadow: var(--shadow-glow);
         }
-        .file-upload input {
-            display: none;
+
+        .upload-box.has-file {
+            border-color: var(--success);
+            border-style: solid;
+            background: rgba(16, 185, 129, 0.05);
         }
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 500;
+
+        .upload-box input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
             cursor: pointer;
-            transition: 0.2s;
         }
+
+        .upload-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 16px;
+            background: var(--bg-elevated);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .upload-box.has-file .upload-icon {
+            background: rgba(16, 185, 129, 0.15);
+        }
+
+        .upload-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .upload-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .upload-filename {
+            margin-top: 12px;
+            padding: 8px 12px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--success);
+            word-break: break-all;
+        }
+
+        /* 按钮 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
         .btn-primary {
-            background: #61afef;
-            color: #121212;
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: var(--shadow-md), 0 0 20px rgba(99, 102, 241, 0.3);
         }
-        .btn-primary:hover {
-            background: #4895d9;
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), 0 0 30px rgba(99, 102, 241, 0.4);
         }
+
         .btn-primary:disabled {
-            background: #3a3a3a;
-            color: #666;
+            background: var(--bg-elevated);
+            color: var(--text-muted);
             cursor: not-allowed;
+            box-shadow: none;
         }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
         .btn-success {
-            background: #98c379;
-            color: #121212;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
         }
-        .btn-success:hover {
-            background: #7faa60;
+
+        .btn-lg {
+            padding: 18px 40px;
+            font-size: 16px;
+            width: 100%;
         }
+
         .btn-group {
             display: flex;
-            gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
         }
-        .waveform-box {
-            background: #252526;
-            border-radius: 6px;
-            padding: 15px;
-            margin: 15px 0;
+
+        /* 状态提示 */
+        .status-bar {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
         }
-        .status-tip {
-            padding: 10px 15px;
-            border-radius: 6px;
-            margin: 15px 0;
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .status-bar.info {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: var(--primary-light);
+        }
+
+        .status-bar.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+
+        .status-bar.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--error);
+        }
+
+        .status-bar.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: var(--warning);
+        }
+
+        .status-icon {
+            font-size: 18px;
+        }
+
+        /* 进度条 */
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
             text-align: center;
         }
-        .status-info {
-            background: #1e3a5f;
-            color: #61afef;
+
+        /* 波形显示 */
+        .waveform-container {
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
         }
-        .status-success {
-            background: #2a3f21;
-            color: #98c379;
+
+        /* 结果卡片 */
+        .result-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.3);
         }
-        .status-error {
-            background: #3f2123;
-            color: #e06c75;
+
+        /* 提示信息 */
+        .info-box {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            border-radius: 12px;
+            margin-bottom: 24px;
         }
+
+        .info-box-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .info-box-content {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .info-box-content strong {
+            color: var(--accent);
+        }
+
+        /* 工程列表 */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .project-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .project-item:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(4px);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .project-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(99, 102, 241, 0.15);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--primary-light);
+        }
+
+        .project-time {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .project-files {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .project-file {
+            padding: 4px 10px;
+            background: var(--bg-elevated);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* 两列布局 */
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        .three-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
+
+        /* 响应式 */
+        @media (max-width: 1200px) {
+            .upload-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
-        .project-item {
-            padding: 15px;
-            border: 1px solid #333;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            background: #1e1e1e;
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 80px;
+            }
+            .logo-text, .logo-subtitle, .nav-section-title, .nav-item span {
+                display: none;
+            }
+            .nav-item {
+                justify-content: center;
+            }
+            .main-content {
+                margin-left: 80px;
+            }
+            .upload-grid {
+                grid-template-columns: 1fr;
+            }
         }
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        .project-type {
-            font-weight: 600;
-            color: #61afef;
-        }
-        .project-time {
-            color: #999;
-            font-size: 14px;
-        }
-        .project-files {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .file-link {
-            padding: 5px 10px;
-            background: #252526;
-            border-radius: 4px;
-            color: #98c379;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .file-link:hover {
-            background: #333;
-        }
+
+        /* 滚动条 */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #1e1e1e;
+            background: transparent;
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #3a3a3a;
+            background: var(--border);
             border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
         }
     </style>
 </head>
 <body>
+    <div class="bg-pattern"></div>
+    
     <div class="app-container">
-        <!-- 左侧侧边栏 -->
-        <div class="sidebar">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
             <div class="sidebar-header">
-                <div class="project-title">川时的音乐工坊</div>
-            </div>
-            <div class="menu-list">
-                <div class="menu-item active" data-panel="split">
-                    <span>🎵</span>
-                    <span>歌曲拆分</span>
-                </div>
-                <div class="menu-item" data-panel="mix">
-                    <span>🎛️</span>
-                    <span>AI混音</span>
-                </div>
-                <div class="menu-item" data-panel="projects">
-                    <span>📁</span>
-                    <span>工程记录</span>
+                <div class="logo">
+                    <div class="logo-icon">🎵</div>
+                    <div>
+                        <div class="logo-text">川时的音乐工坊</div>
+                        <div class="logo-subtitle">Professional AI Mixing</div>
+                    </div>
                 </div>
             </div>
-        </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">功能模块</div>
+                    <div class="nav-item active" data-panel="split">
+                        <span class="nav-item-icon">🎶</span>
+                        <span>歌曲拆分</span>
+                    </div>
+                    <div class="nav-item" data-panel="mix">
+                        <span class="nav-item-icon">🎛️</span>
+                        <span>AI 混音</span>
+                    </div>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">管理</div>
+                    <div class="nav-item" data-panel="projects">
+                        <span class="nav-item-icon">📁</span>
+                        <span>工程记录</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
 
-        <!-- 右侧主窗口 -->
-        <div class="main-window">
+        <!-- 主内容区 -->
+        <main class="main-content">
             <!-- 歌曲拆分面板 -->
             <div class="panel active" id="split-panel">
-                <h2 class="panel-title">歌曲拆分</h2>
+                <header class="page-header">
+                    <h1 class="page-title">歌曲拆分</h1>
+                    <p class="page-description">使用 AI 深度学习模型，将歌曲智能分离为伴奏与人声</p>
+                </header>
+
                 <div class="card">
-                    <div class="card-title">上传原版歌曲</div>
-                    <div class="file-upload">
-                        <label for="split-song">
-                            <div>点击选择歌曲文件 | 支持 mp3/wav/m4a/flac</div>
-                        </label>
-                        <input type="file" id="split-song" accept="audio/*">
+                    <div class="card-header">
+                        <h3 class="card-title">上传歌曲</h3>
+                        <span class="card-badge">Demucs 模型</span>
                     </div>
-                    <div id="split-file-name" style="color: #999; margin-bottom: 15px;"></div>
-                    <button class="btn btn-primary" id="split-btn" disabled>一键拆分伴奏与人声</button>
+                    
+                    <div class="upload-box" id="split-upload">
+                        <input type="file" id="split-song" accept="audio/*">
+                        <div class="upload-icon">📁</div>
+                        <div class="upload-title">拖拽文件到此处或点击上传</div>
+                        <div class="upload-subtitle">支持 MP3、WAV、FLAC、M4A 格式</div>
+                    </div>
+                    
                     <div id="split-status"></div>
+                    
+                    <button class="btn btn-primary btn-lg" id="split-btn" disabled>
+                        <span>🚀</span> 开始拆分
+                    </button>
                 </div>
 
                 <div class="two-column" id="split-result" style="display: none;">
-                    <div class="card">
-                        <div class="card-title">纯伴奏</div>
-                        <div class="waveform-box"><div id="split-acc-wave"></div></div>
+                    <div class="card result-card">
+                        <h3 class="card-title">🎵 纯伴奏</h3>
+                        <div class="waveform-container" id="split-acc-wave"></div>
                         <div class="btn-group">
-                            <button class="btn btn-primary" id="acc-play-btn">播放</button>
-                            <button class="btn btn-primary" id="acc-pause-btn">暂停</button>
-                            <a class="btn btn-success" id="acc-download-btn" href="" download>下载</a>
+                            <button class="btn btn-secondary" id="acc-play-btn">▶️ 播放</button>
+                            <button class="btn btn-secondary" id="acc-pause-btn">⏸️ 暂停</button>
+                            <a class="btn btn-success" id="acc-download-btn" href="" download>📥 下载</a>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-title">原唱人声</div>
-                        <div class="waveform-box"><div id="split-vocal-wave"></div></div>
+                    <div class="card result-card">
+                        <h3 class="card-title">🎤 原唱人声</h3>
+                        <div class="waveform-container" id="split-vocal-wave"></div>
                         <div class="btn-group">
-                            <button class="btn btn-primary" id="vocal-play-btn">播放</button>
-                            <button class="btn btn-primary" id="vocal-pause-btn">暂停</button>
-                            <a class="btn btn-success" id="vocal-download-btn" href="" download>下载</a>
+                            <button class="btn btn-secondary" id="vocal-play-btn">▶️ 播放</button>
+                            <button class="btn btn-secondary" id="vocal-pause-btn">⏸️ 暂停</button>
+                            <a class="btn btn-success" id="vocal-download-btn" href="" download>📥 下载</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- AI混音面板 -->
+            <!-- AI 混音面板 -->
             <div class="panel" id="mix-panel">
-                <h2 class="panel-title">AI混音（原曲学习）</h2>
-                <div class="three-column">
-                    <div class="card">
-                        <div class="card-title">1. 原版歌曲</div>
-                        <div class="file-upload">
-                            <label for="mix-original">
-                                <div>点击上传原唱歌曲</div>
-                            </label>
-                            <input type="file" id="mix-original" accept="audio/*">
-                        </div>
-                        <div id="mix-original-name" style="color: #999;"></div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">2. 伴奏文件</div>
-                        <div class="file-upload">
-                            <label for="mix-acc">
-                                <div>点击上传伴奏</div>
-                            </label>
-                            <input type="file" id="mix-acc" accept="audio/*">
-                        </div>
-                        <div id="mix-acc-name" style="color: #999;"></div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">3. 人声干声</div>
-                        <div class="file-upload">
-                            <label for="mix-vocal">
-                                <div>点击上传人声干声</div>
-                            </label>
-                            <input type="file" id="mix-vocal" accept="audio/*">
-                        </div>
-                        <div id="mix-vocal-name" style="color: #999;"></div>
+                <header class="page-header">
+                    <h1 class="page-title">AI 专业混音</h1>
+                    <p class="page-description">深度学习驱动的专业级贴唱混音，自动学习原曲风格</p>
+                </header>
+
+                <div class="info-box">
+                    <span class="info-box-icon">💡</span>
+                    <div class="info-box-content">
+                        <strong>重要提示：</strong>请确保您的干音已与伴奏<strong>时间对齐</strong>。本引擎专注于音质处理和风格匹配，
+                        不进行自动时间对齐，以保证最佳效果。干音时长应与伴奏一致。
                     </div>
                 </div>
 
                 <div class="card">
-                    <button class="btn btn-success" id="mix-btn" disabled style="width: 100%; font-size: 18px; padding: 15px;">开始AI混音（学习原曲风格）</button>
+                    <h3 class="card-title">上传文件</h3>
+                    
+                    <div class="upload-grid">
+                        <div class="upload-box" id="mix-original-upload">
+                            <input type="file" id="mix-original" accept="audio/*">
+                            <div class="upload-icon">🎼</div>
+                            <div class="upload-title">原版歌曲</div>
+                            <div class="upload-subtitle">用于学习混音风格</div>
+                        </div>
+                        <div class="upload-box" id="mix-acc-upload">
+                            <input type="file" id="mix-acc" accept="audio/*">
+                            <div class="upload-icon">🎹</div>
+                            <div class="upload-title">伴奏</div>
+                            <div class="upload-subtitle">用户伴奏文件</div>
+                        </div>
+                        <div class="upload-box" id="mix-vocal-upload">
+                            <input type="file" id="mix-vocal" accept="audio/*">
+                            <div class="upload-icon">🎤</div>
+                            <div class="upload-title">人声干声</div>
+                            <div class="upload-subtitle">已对齐的用户干音</div>
+                        </div>
+                    </div>
+                    
                     <div id="mix-status"></div>
+                    
+                    <button class="btn btn-primary btn-lg" id="mix-btn" disabled>
+                        <span>🎛️</span> 开始 AI 混音
+                    </button>
                 </div>
 
-                <div class="card" id="mix-result" style="display: none;">
-                    <div class="card-title">混音成品</div>
-                    <div class="waveform-box"><div id="mix-result-wave"></div></div>
+                <div class="card result-card" id="mix-result" style="display: none;">
+                    <div class="card-header">
+                        <h3 class="card-title">🎵 混音成品</h3>
+                        <span class="card-badge" id="mix-stats"></span>
+                    </div>
+                    <div class="waveform-container" id="mix-result-wave"></div>
                     <div class="btn-group">
-                        <button class="btn btn-primary" id="result-play-btn">播放</button>
-                        <button class="btn btn-primary" id="result-pause-btn">暂停</button>
-                        <a class="btn btn-success" id="result-download-btn" href="" download>下载成品</a>
+                        <button class="btn btn-secondary" id="result-play-btn">▶️ 播放</button>
+                        <button class="btn btn-secondary" id="result-pause-btn">⏸️ 暂停</button>
+                        <a class="btn btn-success" id="result-download-btn" href="" download>📥 下载成品</a>
                     </div>
                 </div>
             </div>
 
             <!-- 工程记录面板 -->
             <div class="panel" id="projects-panel">
-                <h2 class="panel-title">工程记录</h2>
-                <button class="btn btn-primary" id="refresh-projects-btn">刷新工程列表</button>
-                <div id="projects-list" style="margin-top: 20px;"></div>
+                <header class="page-header">
+                    <h1 class="page-title">工程记录</h1>
+                    <p class="page-description">查看所有历史处理记录</p>
+                </header>
+
+                <div class="btn-group" style="margin-bottom: 24px;">
+                    <button class="btn btn-secondary" id="refresh-projects-btn">🔄 刷新列表</button>
+                </div>
+
+                <div class="project-list" id="projects-list"></div>
             </div>
-        </div>
+        </main>
     </div>
 
-    <script>
-        let currentPanel = "split";
-        // 波形播放器
-        const splitAccWave = WaveSurfer.create({ container: '#split-acc-wave', waveColor: '#61afef', progressColor: '#4895d9', height: 80, barWidth: 2 });
-        const splitVocalWave = WaveSurfer.create({ container: '#split-vocal-wave', waveColor: '#98c379', progressColor: '#7faa60', height: 80, barWidth: 2 });
-        const mixResultWave = WaveSurfer.create({ container: '#mix-result-wave', waveColor: '#c678dd', progressColor: '#a95dc0', height: 80, barWidth: 2 });
+    <script type="module">
+        import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.min.js';
+
+        // 波形播放器存储
+        const wavePlayers = {};
+        
+        // 创建波形播放器
+        function createWavePlayer(containerId, color = '#6366f1') {
+            const container = document.getElementById(containerId);
+            if (!container) return null;
+            
+            container.innerHTML = '';
+            
+            return WaveSurfer.create({
+                container: container,
+                waveColor: color,
+                progressColor: '#ffffff',
+                cursorColor: '#22d3ee',
+                height: 80,
+                barWidth: 2,
+                barGap: 1,
+                barRadius: 2,
+                normalize: true,
+            });
+        }
 
         // 菜单切换
-        document.querySelectorAll('.menu-item').forEach(item => {
+        document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', () => {
                 const panel = item.dataset.panel;
-                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
                 item.classList.add('active');
                 document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
                 document.getElementById(`${panel}-panel`).classList.add('active');
-                currentPanel = panel;
-                if (panel === "projects") loadProjects();
+                
+                if (panel === 'projects') loadProjects();
             });
         });
 
+        // 拖拽上传支持
+        function setupDragDrop(uploadBox, inputId, nameDisplay) {
+            const input = document.getElementById(inputId);
+            
+            ['dragenter', 'dragover'].forEach(event => {
+                uploadBox.addEventListener(event, (e) => {
+                    e.preventDefault();
+                    uploadBox.classList.add('dragover');
+                });
+            });
+            
+            ['dragleave', 'drop'].forEach(event => {
+                uploadBox.addEventListener(event, (e) => {
+                    e.preventDefault();
+                    uploadBox.classList.remove('dragover');
+                });
+            });
+            
+            uploadBox.addEventListener('drop', (e) => {
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('audio/')) {
+                    const dt = new DataTransfer();
+                    dt.items.add(file);
+                    input.files = dt.files;
+                    input.dispatchEvent(new Event('change'));
+                }
+            });
+        }
+
         // ====================== 歌曲拆分逻辑 ======================
+        const splitUpload = document.getElementById('split-upload');
         const splitSongInput = document.getElementById('split-song');
         const splitBtn = document.getElementById('split-btn');
-        const splitFileName = document.getElementById('split-file-name');
         const splitStatus = document.getElementById('split-status');
         const splitResult = document.getElementById('split-result');
 
+        setupDragDrop(splitUpload, 'split-song');
+
         splitSongInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
-            splitFileName.textContent = file ? `已选择: ${file.name}` : '';
-            splitBtn.disabled = !file;
+            if (file) {
+                splitUpload.classList.add('has-file');
+                splitUpload.querySelector('.upload-filename')?.remove();
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'upload-filename';
+                nameDiv.textContent = `✓ ${file.name}`;
+                splitUpload.appendChild(nameDiv);
+                splitBtn.disabled = false;
+            } else {
+                splitUpload.classList.remove('has-file');
+                splitBtn.disabled = true;
+            }
         });
 
         splitBtn.addEventListener('click', async () => {
             const file = splitSongInput.files[0];
             if (!file) return;
+            
             splitBtn.disabled = true;
-            splitStatus.innerHTML = '<div class="status-tip status-info">正在拆分，请稍候...</div>';
+            splitStatus.innerHTML = `
+                <div class="status-bar info">
+                    <span class="status-icon">⏳</span>
+                    <span>正在使用 Demucs 模型进行 AI 分离，请稍候...</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar"><div class="progress-fill" id="split-progress"></div></div>
+                    <div class="progress-text">加载模型并处理中...</div>
+                </div>
+            `;
             
             const formData = new FormData();
             formData.append('original_song', file);
@@ -396,26 +890,43 @@
                 const res = await fetch('/api/split', { method: 'POST', body: formData });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.detail);
-
-                splitAccWave.load(`/api/download/${data.acc_file}`);
-                splitVocalWave.load(`/api/download/${data.vocal_file}`);
+                
+                // 创建波形播放器
+                wavePlayers.splitAcc = createWavePlayer('split-acc-wave', '#6366f1');
+                wavePlayers.splitVocal = createWavePlayer('split-vocal-wave', '#22d3ee');
+                
+                wavePlayers.splitAcc.load(`/api/download/${data.acc_file}`);
+                wavePlayers.splitVocal.load(`/api/download/${data.vocal_file}`);
+                
                 document.getElementById('acc-download-btn').href = `/api/download/${data.acc_file}`;
                 document.getElementById('vocal-download-btn').href = `/api/download/${data.vocal_file}`;
+                
                 splitResult.style.display = 'grid';
-                splitStatus.innerHTML = '<div class="status-tip status-success">✅ 拆分成功！</div>';
+                splitStatus.innerHTML = `
+                    <div class="status-bar success">
+                        <span class="status-icon">✅</span>
+                        <span>拆分完成！已生成纯伴奏和原唱人声</span>
+                    </div>
+                `;
             } catch (e) {
-                splitStatus.innerHTML = `<div class="status-tip status-error">❌ 出错了：${e.message}</div>`;
+                splitStatus.innerHTML = `
+                    <div class="status-bar error">
+                        <span class="status-icon">❌</span>
+                        <span>处理失败: ${e.message}</span>
+                    </div>
+                `;
             } finally {
                 splitBtn.disabled = false;
             }
         });
 
-        document.getElementById('acc-play-btn').addEventListener('click', () => splitAccWave.play());
-        document.getElementById('acc-pause-btn').addEventListener('click', () => splitAccWave.pause());
-        document.getElementById('vocal-play-btn').addEventListener('click', () => splitVocalWave.play());
-        document.getElementById('vocal-pause-btn').addEventListener('click', () => splitVocalWave.pause());
+        // 播放控制
+        document.getElementById('acc-play-btn').addEventListener('click', () => wavePlayers.splitAcc?.play());
+        document.getElementById('acc-pause-btn').addEventListener('click', () => wavePlayers.splitAcc?.pause());
+        document.getElementById('vocal-play-btn').addEventListener('click', () => wavePlayers.splitVocal?.play());
+        document.getElementById('vocal-pause-btn').addEventListener('click', () => wavePlayers.splitVocal?.pause());
 
-        // ====================== AI混音逻辑 ======================
+        // ====================== AI 混音逻辑 ======================
         const mixOriginalInput = document.getElementById('mix-original');
         const mixAccInput = document.getElementById('mix-acc');
         const mixVocalInput = document.getElementById('mix-vocal');
@@ -423,25 +934,33 @@
         const mixStatus = document.getElementById('mix-status');
         const mixResult = document.getElementById('mix-result');
 
-        function checkMixFiles() {
-            const original = mixOriginalInput.files[0];
-            const acc = mixAccInput.files[0];
-            const vocal = mixVocalInput.files[0];
-            mixBtn.disabled = !(original && acc && vocal);
+        setupDragDrop(document.getElementById('mix-original-upload'), 'mix-original');
+        setupDragDrop(document.getElementById('mix-acc-upload'), 'mix-acc');
+        setupDragDrop(document.getElementById('mix-vocal-upload'), 'mix-vocal');
+
+        function updateMixUploadBox(input, uploadBox) {
+            const file = input.files[0];
+            if (file) {
+                uploadBox.classList.add('has-file');
+                uploadBox.querySelector('.upload-filename')?.remove();
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'upload-filename';
+                nameDiv.textContent = `✓ ${file.name}`;
+                uploadBox.appendChild(nameDiv);
+            } else {
+                uploadBox.classList.remove('has-file');
+            }
+            checkMixFiles();
         }
 
-        mixOriginalInput.addEventListener('change', (e) => {
-            document.getElementById('mix-original-name').textContent = e.target.files[0] ? `已选择: ${e.target.files[0].name}` : '';
-            checkMixFiles();
-        });
-        mixAccInput.addEventListener('change', (e) => {
-            document.getElementById('mix-acc-name').textContent = e.target.files[0] ? `已选择: ${e.target.files[0].name}` : '';
-            checkMixFiles();
-        });
-        mixVocalInput.addEventListener('change', (e) => {
-            document.getElementById('mix-vocal-name').textContent = e.target.files[0] ? `已选择: ${e.target.files[0].name}` : '';
-            checkMixFiles();
-        });
+        mixOriginalInput.addEventListener('change', (e) => updateMixUploadBox(e.target, document.getElementById('mix-original-upload')));
+        mixAccInput.addEventListener('change', (e) => updateMixUploadBox(e.target, document.getElementById('mix-acc-upload')));
+        mixVocalInput.addEventListener('change', (e) => updateMixUploadBox(e.target, document.getElementById('mix-vocal-upload')));
+
+        function checkMixFiles() {
+            const hasAll = mixOriginalInput.files[0] && mixAccInput.files[0] && mixVocalInput.files[0];
+            mixBtn.disabled = !hasAll;
+        }
 
         mixBtn.addEventListener('click', async () => {
             const original = mixOriginalInput.files[0];
@@ -450,7 +969,16 @@
             if (!original || !acc || !vocal) return;
 
             mixBtn.disabled = true;
-            mixStatus.innerHTML = '<div class="status-tip status-info">正在AI混音中，请稍候（3-5分钟）...</div>';
+            mixStatus.innerHTML = `
+                <div class="status-bar info">
+                    <span class="status-icon">🎛️</span>
+                    <span>AI 混音引擎正在处理中...</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar"><div class="progress-fill" id="mix-progress"></div></div>
+                    <div class="progress-text">深度学习处理中，预计需要 1-3 分钟</div>
+                </div>
+            `;
             
             const formData = new FormData();
             formData.append('original_song', original);
@@ -461,24 +989,40 @@
                 const res = await fetch('/api/mix', { method: 'POST', body: formData });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.detail);
-
-                mixResultWave.load(`/api/download/${data.result_file}`);
+                
+                wavePlayers.mixResult = createWavePlayer('mix-result-wave', '#8b5cf6');
+                wavePlayers.mixResult.load(`/api/download/${data.result_file}`);
+                
                 document.getElementById('result-download-btn').href = `/api/download/${data.result_file}`;
+                
+                if (data.stats) {
+                    document.getElementById('mix-stats').textContent = `${data.stats.lufs} LUFS | ${data.stats.sample_rate}Hz`;
+                }
+                
                 mixResult.style.display = 'block';
-                mixStatus.innerHTML = '<div class="status-tip status-success">✅ 混音完成！</div>';
+                mixStatus.innerHTML = `
+                    <div class="status-bar success">
+                        <span class="status-icon">✅</span>
+                        <span>混音完成！已应用风格匹配和专业母带处理</span>
+                    </div>
+                `;
             } catch (e) {
-                mixStatus.innerHTML = `<div class="status-tip status-error">❌ 出错了：${e.message}</div>`;
+                mixStatus.innerHTML = `
+                    <div class="status-bar error">
+                        <span class="status-icon">❌</span>
+                        <span>处理失败: ${e.message}</span>
+                    </div>
+                `;
             } finally {
                 mixBtn.disabled = false;
             }
         });
 
-        document.getElementById('result-play-btn').addEventListener('click', () => mixResultWave.play());
-        document.getElementById('result-pause-btn').addEventListener('click', () => mixResultWave.pause());
+        document.getElementById('result-play-btn').addEventListener('click', () => wavePlayers.mixResult?.play());
+        document.getElementById('result-pause-btn').addEventListener('click', () => wavePlayers.mixResult?.pause());
 
         // ====================== 工程记录逻辑 ======================
         const projectsList = document.getElementById('projects-list');
-        const refreshProjectsBtn = document.getElementById('refresh-projects-btn');
 
         async function loadProjects() {
             try {
@@ -487,26 +1031,42 @@
                 if (data.code !== 0) throw new Error("获取工程失败");
 
                 projectsList.innerHTML = '';
+                
+                if (data.projects.length === 0) {
+                    projectsList.innerHTML = `
+                        <div class="status-bar info">
+                            <span class="status-icon">📭</span>
+                            <span>暂无工程记录</span>
+                        </div>
+                    `;
+                    return;
+                }
+                
                 data.projects.forEach(project => {
-                    const projectDiv = document.createElement('div');
-                    projectDiv.className = 'project-item';
-                    projectDiv.innerHTML = `
+                    const div = document.createElement('div');
+                    div.className = 'project-item';
+                    div.innerHTML = `
                         <div class="project-header">
                             <span class="project-type">${project.project_type}</span>
                             <span class="project-time">${project.create_time}</span>
                         </div>
                         <div class="project-files">
-                            ${project.file_list.map(file => `<span style="color:#999;">${file}</span>`).join('')}
+                            ${project.file_list.map(file => `<span class="project-file">${file}</span>`).join('')}
                         </div>
                     `;
-                    projectsList.appendChild(projectDiv);
+                    projectsList.appendChild(div);
                 });
             } catch (e) {
-                projectsList.innerHTML = `<div class="status-tip status-error">❌ 获取工程失败：${e.message}</div>`;
+                projectsList.innerHTML = `
+                    <div class="status-bar error">
+                        <span class="status-icon">❌</span>
+                        <span>加载失败: ${e.message}</span>
+                    </div>
+                `;
             }
         }
 
-        refreshProjectsBtn.addEventListener('click', loadProjects);
+        document.getElementById('refresh-projects-btn').addEventListener('click', loadProjects);
     </script>
 </body>
 </html>
