@@ -31,11 +31,7 @@
             --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -45,13 +41,10 @@
             overflow-x: hidden;
         }
 
-        /* 动态背景 */
         .bg-pattern {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: 
                 radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
@@ -100,7 +93,6 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            box-shadow: var(--shadow-glow);
         }
 
         .logo-text {
@@ -109,25 +101,19 @@
             background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .logo-subtitle {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 2px;
         }
 
         .nav-menu {
             flex: 1;
-            padding: 24px 16px;
+            padding: 20px 16px;
         }
 
-        .nav-section {
-            margin-bottom: 24px;
-        }
+        .nav-section { margin-bottom: 24px; }
 
         .nav-section-title {
             font-size: 11px;
@@ -177,41 +163,35 @@
             flex: 1;
             margin-left: 280px;
             padding: 40px;
-            min-height: 100vh;
+            max-width: 1200px;
         }
 
-        .page-header {
-            margin-bottom: 40px;
-        }
-
-        .page-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            background: var(--gradient-2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .page-description {
-            color: var(--text-secondary);
-            font-size: 15px;
-        }
-
-        /* 面板 */
         .panel {
             display: none;
             animation: fadeIn 0.3s ease;
         }
 
-        .panel.active {
-            display: block;
-        }
+        .panel.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header { margin-bottom: 32px; }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-description {
+            font-size: 16px;
+            color: var(--text-secondary);
         }
 
         /* 卡片 */
@@ -327,6 +307,100 @@
             word-break: break-all;
         }
 
+        .upload-optional {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 2px 8px;
+            background: rgba(245, 158, 11, 0.2);
+            border-radius: 10px;
+            font-size: 10px;
+            color: var(--warning);
+        }
+
+        /* 参数区域 */
+        .params-section {
+            margin: 24px 0;
+            padding: 24px;
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .params-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .params-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .param-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .param-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .param-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .param-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-left: 26px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: var(--border);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .slider-value {
+            min-width: 50px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+
         /* 按钮 */
         .btn {
             display: inline-flex;
@@ -366,13 +440,10 @@
             border: 1px solid var(--border);
         }
 
-        .btn-secondary:hover {
-            background: var(--border);
-        }
-
         .btn-success {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
+            text-decoration: none;
         }
 
         .btn-lg {
@@ -399,41 +470,51 @@
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-10px); }
+            from { opacity: 0; transform: translateX(-20px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
         .status-bar.info {
             background: rgba(99, 102, 241, 0.1);
             border: 1px solid rgba(99, 102, 241, 0.3);
-            color: var(--primary-light);
         }
 
         .status-bar.success {
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.3);
-            color: var(--success);
         }
 
         .status-bar.error {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
-            color: var(--error);
         }
 
-        .status-bar.warning {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            color: var(--warning);
+        .status-icon { font-size: 20px; }
+
+        /* 信息框 */
+        .info-box {
+            padding: 20px;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 16px;
         }
 
-        .status-icon {
-            font-size: 18px;
+        .info-box-icon { font-size: 24px; }
+
+        .info-box-content {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-secondary);
         }
+
+        .info-box-content strong { color: var(--text-primary); }
 
         /* 进度条 */
         .progress-container {
-            margin: 20px 0;
+            margin-top: 16px;
         }
 
         .progress-bar {
@@ -447,55 +528,38 @@
             height: 100%;
             background: var(--gradient-1);
             border-radius: 4px;
-            transition: width 0.3s ease;
-            width: 0%;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
         }
 
         .progress-text {
             margin-top: 8px;
             font-size: 13px;
-            color: var(--text-secondary);
-            text-align: center;
+            color: var(--text-muted);
         }
 
-        /* 波形显示 */
+        /* 波形容器 */
         .waveform-container {
             background: var(--bg-elevated);
             border-radius: 12px;
-            padding: 20px;
+            padding: 16px;
             margin: 16px 0;
         }
 
-        /* 结果卡片 */
+        /* 两列布局 */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
         .result-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-        }
-
-        /* 提示信息 */
-        .info-box {
-            display: flex;
-            gap: 12px;
-            padding: 16px;
-            background: rgba(34, 211, 238, 0.1);
-            border: 1px solid rgba(34, 211, 238, 0.3);
-            border-radius: 12px;
-            margin-bottom: 24px;
-        }
-
-        .info-box-icon {
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .info-box-content {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .info-box-content strong {
-            color: var(--accent);
+            border-color: rgba(16, 185, 129, 0.3);
         }
 
         /* 工程列表 */
@@ -509,12 +573,12 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 20px;
+            padding: 16px 20px;
             transition: all 0.2s ease;
         }
 
         .project-item:hover {
-            border-color: rgba(99, 102, 241, 0.3);
+            border-color: var(--primary);
             transform: translateX(4px);
         }
 
@@ -522,18 +586,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .project-type {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            background: rgba(99, 102, 241, 0.15);
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--primary-light);
         }
 
@@ -556,56 +613,61 @@
             color: var(--text-secondary);
         }
 
-        /* 两列布局 */
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        /* 流程展示 */
+        .flow-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 12px;
+        }
+
+        .flow-step {
+            padding: 6px 12px;
+            background: var(--bg-elevated);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flow-step.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .flow-arrow {
+            color: var(--text-muted);
         }
 
         /* 响应式 */
         @media (max-width: 1200px) {
-            .upload-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .upload-grid { grid-template-columns: 1fr 1fr; }
+            .two-column { grid-template-columns: 1fr; }
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 768px) {
             .sidebar {
-                width: 80px;
-            }
-            .logo-text, .logo-subtitle, .nav-section-title, .nav-item span {
-                display: none;
-            }
-            .nav-item {
-                justify-content: center;
+                width: 100%;
+                height: auto;
+                position: relative;
             }
             .main-content {
-                margin-left: 80px;
+                margin-left: 0;
+                padding: 20px;
             }
-            .upload-grid {
-                grid-template-columns: 1fr;
-            }
+            .upload-grid { grid-template-columns: 1fr; }
         }
 
         /* 滚动条 */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
     </style>
 </head>
 <body>
@@ -698,18 +760,19 @@
                 </div>
             </div>
 
-            <!-- AI 混音面板 -->
+            <!-- AI 混音面板（统一流程）-->
             <div class="panel" id="mix-panel">
                 <header class="page-header">
                     <h1 class="page-title">AI 专业混音</h1>
-                    <p class="page-description">深度学习驱动的专业级贴唱混音，自动学习原曲风格</p>
+                    <p class="page-description">上传伴奏、干声、原曲，AI 自动学习并生成专业级贴唱混音成品</p>
                 </header>
 
                 <div class="info-box">
                     <span class="info-box-icon">💡</span>
                     <div class="info-box-content">
-                        <strong>重要提示：</strong>请确保您的干音已与伴奏<strong>时间对齐</strong>。本引擎专注于音质处理和风格匹配，
-                        不进行自动时间对齐，以保证最佳效果。干音时长应与伴奏一致。
+                        <strong>完整专业流程：</strong><br>
+                        修音 → 深度降噪 → 去齿音 → 两次压缩 → 两次EQ → 动态共振控制 → 混响 → 侧链处理 → 风格匹配 → 母带输出<br><br>
+                        <strong>重要提示：</strong>请确保您的干声已与伴奏<strong>时间对齐</strong>。如有原曲可上传用于风格学习。
                     </div>
                 </div>
 
@@ -717,23 +780,59 @@
                     <h3 class="card-title">上传文件</h3>
                     
                     <div class="upload-grid">
-                        <div class="upload-box" id="mix-original-upload">
-                            <input type="file" id="mix-original" accept="audio/*">
-                            <div class="upload-icon">🎼</div>
-                            <div class="upload-title">原版歌曲</div>
-                            <div class="upload-subtitle">用于学习混音风格</div>
-                        </div>
                         <div class="upload-box" id="mix-acc-upload">
                             <input type="file" id="mix-acc" accept="audio/*">
                             <div class="upload-icon">🎹</div>
                             <div class="upload-title">伴奏</div>
-                            <div class="upload-subtitle">用户伴奏文件</div>
+                            <div class="upload-subtitle">用户伴奏文件（必需）</div>
                         </div>
                         <div class="upload-box" id="mix-vocal-upload">
                             <input type="file" id="mix-vocal" accept="audio/*">
                             <div class="upload-icon">🎤</div>
                             <div class="upload-title">人声干声</div>
-                            <div class="upload-subtitle">已对齐的用户干音</div>
+                            <div class="upload-subtitle">已对齐的用户干音（必需）</div>
+                        </div>
+                        <div class="upload-box" id="mix-original-upload">
+                            <input type="file" id="mix-original" accept="audio/*">
+                            <span class="upload-optional">可选</span>
+                            <div class="upload-icon">🎼</div>
+                            <div class="upload-title">原版歌曲</div>
+                            <div class="upload-subtitle">用于学习混音风格</div>
+                        </div>
+                    </div>
+
+                    <div class="params-section">
+                        <div class="params-title">🎛️ 混音参数</div>
+                        <div class="params-grid">
+                            <div class="param-item">
+                                <label class="param-label">
+                                    <input type="checkbox" id="enable-pitch-correction" checked>
+                                    <span>启用轻微修音</span>
+                                </label>
+                                <span class="param-hint">自动检测调性，轻微校正音高，不影响原本声音质感</span>
+                            </div>
+                            <div class="param-item">
+                                <label class="param-label" style="margin-bottom: 8px;">修音强度</label>
+                                <div class="slider-container">
+                                    <input type="range" id="pitch-strength" min="0" max="100" value="30">
+                                    <span class="slider-value" id="pitch-strength-value">0.30</span>
+                                </div>
+                                <span class="param-hint">数值越小越自然，推荐 0.2-0.4</span>
+                            </div>
+                            <div class="param-item">
+                                <label class="param-label">
+                                    <input type="checkbox" id="enable-denoise" checked>
+                                    <span>启用深度降噪</span>
+                                </label>
+                                <span class="param-hint">自动去除背景噪声</span>
+                            </div>
+                            <div class="param-item">
+                                <label class="param-label">
+                                    <input type="checkbox" id="enable-sidechain" checked>
+                                    <span>启用侧链压缩</span>
+                                </label>
+                                <span class="param-hint">人声响时自动降低伴奏，增强融合度</span>
+                            </div>
                         </div>
                     </div>
                     
@@ -742,6 +841,26 @@
                     <button class="btn btn-primary btn-lg" id="mix-btn" disabled>
                         <span>🎛️</span> 开始 AI 混音
                     </button>
+
+                    <div class="flow-display">
+                        <span class="flow-step">修音</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step">降噪</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step">去齿音</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step">压缩</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step">EQ</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step">共振控制</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step">混响</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step">风格匹配</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step">输出</span>
+                    </div>
                 </div>
 
                 <div class="card result-card" id="mix-result" style="display: none;">
@@ -777,16 +896,12 @@
     <script type="module">
         import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.min.js';
 
-        // 波形播放器存储
         const wavePlayers = {};
-        
-        // 创建波形播放器
+
         function createWavePlayer(containerId, color = '#6366f1') {
             const container = document.getElementById(containerId);
             if (!container) return null;
-            
             container.innerHTML = '';
-            
             return WaveSurfer.create({
                 container: container,
                 waveColor: color,
@@ -808,111 +923,86 @@
                 item.classList.add('active');
                 document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
                 document.getElementById(`${panel}-panel`).classList.add('active');
-                
                 if (panel === 'projects') loadProjects();
             });
         });
 
-        // 拖拽上传支持
-        function setupDragDrop(uploadBox, inputId, nameDisplay) {
-            const input = document.getElementById(inputId);
-            
-            ['dragenter', 'dragover'].forEach(event => {
-                uploadBox.addEventListener(event, (e) => {
-                    e.preventDefault();
-                    uploadBox.classList.add('dragover');
-                });
-            });
-            
-            ['dragleave', 'drop'].forEach(event => {
-                uploadBox.addEventListener(event, (e) => {
-                    e.preventDefault();
-                    uploadBox.classList.remove('dragover');
-                });
-            });
-            
-            uploadBox.addEventListener('drop', (e) => {
-                const file = e.dataTransfer.files[0];
-                if (file && file.type.startsWith('audio/')) {
-                    const dt = new DataTransfer();
-                    dt.items.add(file);
-                    input.files = dt.files;
-                    input.dispatchEvent(new Event('change'));
-                }
-            });
-        }
-
         // ====================== 歌曲拆分逻辑 ======================
         const splitUpload = document.getElementById('split-upload');
-        const splitSongInput = document.getElementById('split-song');
+        const splitInput = document.getElementById('split-song');
         const splitBtn = document.getElementById('split-btn');
         const splitStatus = document.getElementById('split-status');
         const splitResult = document.getElementById('split-result');
 
-        setupDragDrop(splitUpload, 'split-song');
-
-        splitSongInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
+        splitInput.addEventListener('change', () => {
+            if (splitInput.files[0]) {
                 splitUpload.classList.add('has-file');
-                splitUpload.querySelector('.upload-filename')?.remove();
-                const nameDiv = document.createElement('div');
-                nameDiv.className = 'upload-filename';
-                nameDiv.textContent = `✓ ${file.name}`;
-                splitUpload.appendChild(nameDiv);
+                const filenameDiv = document.createElement('div');
+                filenameDiv.className = 'upload-filename';
+                filenameDiv.textContent = splitInput.files[0].name;
+                const existing = splitUpload.querySelector('.upload-filename');
+                if (existing) existing.remove();
+                splitUpload.appendChild(filenameDiv);
                 splitBtn.disabled = false;
-            } else {
-                splitUpload.classList.remove('has-file');
-                splitBtn.disabled = true;
+            }
+        });
+
+        splitUpload.addEventListener('dragover', (e) => { e.preventDefault(); splitUpload.classList.add('dragover'); });
+        splitUpload.addEventListener('dragleave', () => splitUpload.classList.remove('dragover'));
+        splitUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            splitUpload.classList.remove('dragover');
+            if (e.dataTransfer.files[0]) {
+                splitInput.files = e.dataTransfer.files;
+                splitInput.dispatchEvent(new Event('change'));
             }
         });
 
         splitBtn.addEventListener('click', async () => {
-            const file = splitSongInput.files[0];
+            const file = splitInput.files[0];
             if (!file) return;
-            
+
             splitBtn.disabled = true;
             splitStatus.innerHTML = `
                 <div class="status-bar info">
                     <span class="status-icon">⏳</span>
-                    <span>正在使用 Demucs 模型进行 AI 分离，请稍候...</span>
+                    <span>AI 模型正在拆分歌曲...</span>
                 </div>
                 <div class="progress-container">
-                    <div class="progress-bar"><div class="progress-fill" id="split-progress"></div></div>
-                    <div class="progress-text">加载模型并处理中...</div>
+                    <div class="progress-bar"><div class="progress-fill"></div></div>
+                    <div class="progress-text">Demucs 深度分离中，预计需要 1-3 分钟</div>
                 </div>
             `;
-            
+
             const formData = new FormData();
             formData.append('original_song', file);
-            
+
             try {
                 const res = await fetch('/api/split', { method: 'POST', body: formData });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.detail);
-                
-                // 创建波形播放器
-                wavePlayers.splitAcc = createWavePlayer('split-acc-wave', '#6366f1');
-                wavePlayers.splitVocal = createWavePlayer('split-vocal-wave', '#22d3ee');
+
+                wavePlayers.splitAcc = createWavePlayer('split-acc-wave', '#22d3ee');
+                wavePlayers.splitVocal = createWavePlayer('split-vocal-wave', '#d946ef');
                 
                 wavePlayers.splitAcc.load(`/api/download/${data.acc_file}`);
                 wavePlayers.splitVocal.load(`/api/download/${data.vocal_file}`);
-                
+
                 document.getElementById('acc-download-btn').href = `/api/download/${data.acc_file}`;
                 document.getElementById('vocal-download-btn').href = `/api/download/${data.vocal_file}`;
-                
+
                 splitResult.style.display = 'grid';
                 splitStatus.innerHTML = `
                     <div class="status-bar success">
                         <span class="status-icon">✅</span>
-                        <span>拆分完成！已生成纯伴奏和原唱人声</span>
+                        <span>拆分完成！已分离出纯伴奏和原唱人声</span>
                     </div>
                 `;
             } catch (e) {
                 splitStatus.innerHTML = `
                     <div class="status-bar error">
                         <span class="status-icon">❌</span>
-                        <span>处理失败: ${e.message}</span>
+                        <span>拆分失败: ${e.message}</span>
                     </div>
                 `;
             } finally {
@@ -920,53 +1010,67 @@
             }
         });
 
-        // 播放控制
         document.getElementById('acc-play-btn').addEventListener('click', () => wavePlayers.splitAcc?.play());
         document.getElementById('acc-pause-btn').addEventListener('click', () => wavePlayers.splitAcc?.pause());
         document.getElementById('vocal-play-btn').addEventListener('click', () => wavePlayers.splitVocal?.play());
         document.getElementById('vocal-pause-btn').addEventListener('click', () => wavePlayers.splitVocal?.pause());
 
         // ====================== AI 混音逻辑 ======================
-        const mixOriginalInput = document.getElementById('mix-original');
         const mixAccInput = document.getElementById('mix-acc');
         const mixVocalInput = document.getElementById('mix-vocal');
+        const mixOriginalInput = document.getElementById('mix-original');
         const mixBtn = document.getElementById('mix-btn');
         const mixStatus = document.getElementById('mix-status');
         const mixResult = document.getElementById('mix-result');
+        const pitchStrengthSlider = document.getElementById('pitch-strength');
+        const pitchStrengthValue = document.getElementById('pitch-strength-value');
 
-        setupDragDrop(document.getElementById('mix-original-upload'), 'mix-original');
-        setupDragDrop(document.getElementById('mix-acc-upload'), 'mix-acc');
-        setupDragDrop(document.getElementById('mix-vocal-upload'), 'mix-vocal');
+        pitchStrengthSlider.addEventListener('input', (e) => {
+            pitchStrengthValue.textContent = (e.target.value / 100).toFixed(2);
+        });
 
-        function updateMixUploadBox(input, uploadBox) {
-            const file = input.files[0];
-            if (file) {
-                uploadBox.classList.add('has-file');
-                uploadBox.querySelector('.upload-filename')?.remove();
-                const nameDiv = document.createElement('div');
-                nameDiv.className = 'upload-filename';
-                nameDiv.textContent = `✓ ${file.name}`;
-                uploadBox.appendChild(nameDiv);
-            } else {
-                uploadBox.classList.remove('has-file');
-            }
-            checkMixFiles();
+        function setupMixUpload(inputId, uploadId, optional = false) {
+            const input = document.getElementById(inputId);
+            const uploadBox = document.getElementById(uploadId);
+
+            input.addEventListener('change', () => {
+                if (input.files[0]) {
+                    uploadBox.classList.add('has-file');
+                    const filenameDiv = document.createElement('div');
+                    filenameDiv.className = 'upload-filename';
+                    filenameDiv.textContent = input.files[0].name;
+                    const existing = uploadBox.querySelector('.upload-filename');
+                    if (existing) existing.remove();
+                    uploadBox.appendChild(filenameDiv);
+                }
+                // 检查是否可以启用按钮
+                if (mixAccInput.files[0] && mixVocalInput.files[0]) {
+                    mixBtn.disabled = false;
+                }
+            });
+
+            uploadBox.addEventListener('dragover', (e) => { e.preventDefault(); uploadBox.classList.add('dragover'); });
+            uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('dragover'));
+            uploadBox.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadBox.classList.remove('dragover');
+                if (e.dataTransfer.files[0]) {
+                    input.files = e.dataTransfer.files;
+                    input.dispatchEvent(new Event('change'));
+                }
+            });
         }
 
-        mixOriginalInput.addEventListener('change', (e) => updateMixUploadBox(e.target, document.getElementById('mix-original-upload')));
-        mixAccInput.addEventListener('change', (e) => updateMixUploadBox(e.target, document.getElementById('mix-acc-upload')));
-        mixVocalInput.addEventListener('change', (e) => updateMixUploadBox(e.target, document.getElementById('mix-vocal-upload')));
-
-        function checkMixFiles() {
-            const hasAll = mixOriginalInput.files[0] && mixAccInput.files[0] && mixVocalInput.files[0];
-            mixBtn.disabled = !hasAll;
-        }
+        setupMixUpload('mix-acc', 'mix-acc-upload');
+        setupMixUpload('mix-vocal', 'mix-vocal-upload');
+        setupMixUpload('mix-original', 'mix-original-upload', true);
 
         mixBtn.addEventListener('click', async () => {
-            const original = mixOriginalInput.files[0];
             const acc = mixAccInput.files[0];
             const vocal = mixVocalInput.files[0];
-            if (!original || !acc || !vocal) return;
+            const original = mixOriginalInput.files[0];
+
+            if (!acc || !vocal) return;
 
             mixBtn.disabled = true;
             mixStatus.innerHTML = `
@@ -975,35 +1079,42 @@
                     <span>AI 混音引擎正在处理中...</span>
                 </div>
                 <div class="progress-container">
-                    <div class="progress-bar"><div class="progress-fill" id="mix-progress"></div></div>
-                    <div class="progress-text">深度学习处理中，预计需要 1-3 分钟</div>
+                    <div class="progress-bar"><div class="progress-fill"></div></div>
+                    <div class="progress-text">完整专业流程处理中，预计需要 1-3 分钟</div>
                 </div>
             `;
-            
+
             const formData = new FormData();
-            formData.append('original_song', original);
             formData.append('user_acc', acc);
             formData.append('user_vocal', vocal);
-            
+            if (original) formData.append('original_song', original);
+            formData.append('enable_pitch_correction', document.getElementById('enable-pitch-correction').checked);
+            formData.append('pitch_correction_strength', pitchStrengthSlider.value / 100);
+            formData.append('enable_denoise', document.getElementById('enable-denoise').checked);
+            formData.append('enable_sidechain', document.getElementById('enable-sidechain').checked);
+
             try {
                 const res = await fetch('/api/mix', { method: 'POST', body: formData });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.detail);
-                
+
                 wavePlayers.mixResult = createWavePlayer('mix-result-wave', '#8b5cf6');
                 wavePlayers.mixResult.load(`/api/download/${data.result_file}`);
-                
+
                 document.getElementById('result-download-btn').href = `/api/download/${data.result_file}`;
-                
+
+                let statsText = '';
                 if (data.stats) {
-                    document.getElementById('mix-stats').textContent = `${data.stats.lufs} LUFS | ${data.stats.sample_rate}Hz`;
+                    statsText = `${data.stats.lufs} LUFS | ${data.stats.peak_db} dB`;
+                    if (data.stats.key) statsText += ` | ${data.stats.key}调`;
                 }
-                
+                document.getElementById('mix-stats').textContent = statsText;
+
                 mixResult.style.display = 'block';
                 mixStatus.innerHTML = `
                     <div class="status-bar success">
                         <span class="status-icon">✅</span>
-                        <span>混音完成！已应用风格匹配和专业母带处理</span>
+                        <span>混音完成！已应用完整专业混音流程</span>
                     </div>
                 `;
             } catch (e) {
@@ -1031,7 +1142,7 @@
                 if (data.code !== 0) throw new Error("获取工程失败");
 
                 projectsList.innerHTML = '';
-                
+
                 if (data.projects.length === 0) {
                     projectsList.innerHTML = `
                         <div class="status-bar info">
@@ -1041,7 +1152,7 @@
                     `;
                     return;
                 }
-                
+
                 data.projects.forEach(project => {
                     const div = document.createElement('div');
                     div.className = 'project-item';

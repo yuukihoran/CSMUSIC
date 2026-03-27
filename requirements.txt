@@ -12,3 +12,7 @@ pyloudnorm
 scipy
 dtw-python
 audioread
+pyworld
+noisereduce
+pedalboard
+matchering

@@ -8,5 +8,45 @@
       "伴奏.mp3",
       "干音.wav"
     ]
+  },
+  {
+    "project_id": "8bf971be",
+    "project_type": "AI混音",
+    "create_time": "2026-03-26 22:57:41",
+    "file_list": [
+      "陈绮贞 - after 17 48000 1.wav",
+      "伴奏.mp3",
+      "干音.wav"
+    ]
+  },
+  {
+    "project_id": "6dda42b5",
+    "project_type": "AI混音",
+    "create_time": "2026-03-27 03:32:20",
+    "file_list": [
+      "陈绮贞 - after 17 48000 1.wav",
+      "伴奏.mp3",
+      "干音.wav"
+    ]
+  },
+  {
+    "project_id": "7fb51ec0",
+    "project_type": "AI混音",
+    "create_time": "2026-03-27 18:53:59",
+    "file_list": [
+      "陈绮贞 - after 17 48000 1.wav",
+      "伴奏.mp3",
+      "干音.wav"
+    ]
+  },
+  {
+    "project_id": "c5db5dff",
+    "project_type": "AI混音",
+    "create_time": "2026-03-27 19:00:49",
+    "file_list": [
+      "afte.mp3",
+      "伴奏.mp3",
+      "干音.mp3"
+    ]
   }
 ]
